@@ -6,13 +6,15 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import database.Consultas;
+import javax.servlet.http.HttpSession;
+import utiles.Consultas;
 
 /**
  *
@@ -33,13 +35,24 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
+        
+        if(control(request, response)){
             /* TODO output your page here. You may use following sample code. */
-        LinkedList clientes = Consultas.getClientes();
-        request.setAttribute("clientes", clientes);
-        request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
+            LinkedList clientes = Consultas.getClientes();
+            request.setAttribute("clientes", clientes);
+            request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
+        }
 
+    }
+    
+    public boolean control(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if( session == null ){
+            response.sendRedirect("LoginServlet");
+            return false;
+        }
+        return true;
     }
     
     /**

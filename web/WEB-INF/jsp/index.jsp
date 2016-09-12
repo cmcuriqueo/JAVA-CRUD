@@ -51,7 +51,7 @@
                                   </a>
                               </li>
                               <li class="divider"></li>
-                              <li><a href="controller/cerrar_session.php">Cerrar Session</a></li>
+                              <li><a href="Logout">Cerrar Session</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -59,41 +59,43 @@
                 </nav>
                 <div class="col-md-8">
                     <h3>Clientes <a href="AltaFomulario"><small>Nuevo</small></a></h3>
-                    <table class="table table-condensed">
-                        <tr>
-                            <td><strong>Nombre</strong></td>
-                            <td><strong>Edad</strong></td>
-                            <td><strong>Nacionalidad</strong></td>
-                            <td><strong>Activo</strong></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <c:forEach var="fila" items="${clientes}" >
+                    <div class="table-responsive">
+                        <table class="table">
                             <tr>
-                                <td><c:out value="${fila['nombre']}"/></td>
-                                <td><c:out value="${fila['edad']}"/></td>
-                                <td><c:out value="${fila['nacionalidad']}"/></td>
-                                <c:choose>
-                                    <c:when test="${fila.activo eq 1}">
-                                        <td><span class="glyphicon glyphicon-ok"></span></td>   
-                                    </c:when>    
-                                    <c:otherwise>
-                                        <td><span class="glyphicon glyphicon-remove"></span></td>
-                                       </c:otherwise>
+                                <td><strong>Nombre</strong></td>
+                                <td><strong>Edad</strong></td>
+                                <td><strong>Nacionalidad</strong></td>
+                                <td><strong>Activo</strong></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <c:forEach var="fila" items="${clientes}" >
+                                <tr>
+                                    <td><c:out value="${fila['nombre']}"/></td>
+                                    <td><c:out value="${fila['edad']}"/></td>
+                                    <td><c:out value="${fila['nacionalidad']}"/></td>
+                                    <c:choose>
+                                        <c:when test="${fila.activo eq 1}">
+                                            <td><span class="glyphicon glyphicon-ok"></span></td>   
+                                        </c:when>    
+                                        <c:otherwise>
+                                            <td><span class="glyphicon glyphicon-remove"></span></td>
+                                           </c:otherwise>
                                     </c:choose>
-                                    <td>
-                                        <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
-                                            <span class="glyphicon glyphicon-pencil"></span> Modificar
+                                        <td>
+                                            <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
+                                                <span class="glyphicon glyphicon-pencil"></span> Modificar
+                                            </a>
+                                        </td>
+                                        <td>
+                                         <a class="btn btn-danger" href="Eliminacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
+                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
                                         </a>
                                     </td>
-                                    <td>
-                                     <a class="btn btn-danger" href="Eliminacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
-                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package utiles;
 
 import java.sql.Date;
 import java.sql.Connection;
@@ -28,13 +28,13 @@ public class Cliente {
  
     
     public static boolean insert(String nombre, String apellido, Date fecha_nacimiento, int nacionalidad ) {
-        
+        Connection conn = null;
         try {
             InitialContext initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
 
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             String sql = "INSERT INTO clientes (nombre, apellido, fecha_nacimiento, nacionalidad_id, activo) VALUES ( ?, ?, ? , ? , 1 )";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, nombre);
@@ -47,18 +47,24 @@ public class Cliente {
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        } finally {
+            try {
+                if(conn != null && !conn.isClosed()) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return true;
     }
 
     public static boolean update(int id_cliente, String nombre, String apellido, Date fecha_nacimiento, int nacionalidad, int activo ) {
-        
+        Connection conn = null;
         try {
             InitialContext initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             
-            java.sql.Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             
      
             String sql = "UPDATE clientes "
@@ -81,16 +87,23 @@ public class Cliente {
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }finally {
+            try {
+                if(conn != null && !conn.isClosed()) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return true;
     }
     
     public static boolean delete(int id) {
+        Connection conn = null;
         try {
             InitialContext initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
-            java.sql.Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             
             String sql =    "DELETE FROM " +
                                 "clientes " +
@@ -105,17 +118,24 @@ public class Cliente {
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        } finally {
+            try {
+                if(conn != null && !conn.isClosed()) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return true;
     }    
     
     public static HashMap getCliente(int id) {
         HashMap<String, Object> cliente = new HashMap();
+        Connection conn = null;
         try {
             InitialContext initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             
             String sql = "SELECT "
                     + "clientes.id as id_cliente, "
@@ -146,6 +166,12 @@ public class Cliente {
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        } finally {
+            try {
+                if(conn != null && !conn.isClosed()) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cliente;
     }

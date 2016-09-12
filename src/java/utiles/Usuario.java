@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package utiles;
 
+import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -22,47 +23,59 @@ import javax.sql.DataSource;
  *
  * @author universidad
  */
-public class Usuario {
-    private String nombre;
-    private String password;
+public class Usuario implements Serializable{
 
-    public Usuario() {}
-    
-    public Usuario(String usr, String pass){
-        setNombre(usr);
-        setPassword(pass);
+    private Integer id;
+    private String nombre;
+
+    private Usuario( Integer id, String nombre ) {
+        setId(id);
+        setNombre(nombre);
+    }
+
+    public Integer getId(){
+        return id;
     }
 
     private void setNombre(String usr) {
         nombre = usr;
     }
-
-    private void setPassword(String pass) {
-        password = pass;
+    public String getNombre() {
+        return nombre; 
     }
     
-    public boolean validate(){
-        boolean valido = false;
-        
+    public static Usuario getUsuario(String user, String password){
+        Usuario usr = null;
+        Connection conn = null;
         try {
             InitialContext initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
-            java.sql.Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             
-            String sql = "SELECT nombre, ";
+            String sql = "SELECT usuario.id, usuario.nombre FROM usuario.usuario WHERE usuario.nombre LIKE ? AND usuario.contrasenia = SHA1( ? ) AND usuario.estado = 1";
             PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user);
+            pstmt.setString(2, password);
+        
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-
-                rs.getInt("id");
-                rs.getString("nombre");
-  
+                usr = new Usuario( rs.getInt("id"), rs.getString("nombre") );
             }
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if( conn != null && !conn.isClosed() ) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return valido;
+        return usr;
+    }
+
+    private void setId(Integer id) {
+        this.id = id;
     }
     
 
