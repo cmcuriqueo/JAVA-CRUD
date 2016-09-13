@@ -88,7 +88,7 @@
                                     </c:choose>
                                         <td>
                                             <c:if test="${permisos.tienePermiso('UPDATE')}">
-                                                <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
+                                                <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-info" >
                                                     <span class="glyphicon glyphicon-pencil"></span> Modificar
                                                 </a>
                                             </c:if>

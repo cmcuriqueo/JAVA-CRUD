@@ -115,7 +115,7 @@
                                         <div class="col-sm-4">
                                             <select class="form-control" name="activo">
                                                 <c:choose>
-                                                    <c:when test="${fila.activo == 1}">
+                                                    <c:when test="${fila.activo eq 1}">
                                                         <option value="1" selected>Activo</option>
                                                         <option value="0" >Inactivo</option> 
                                                     </c:when>    

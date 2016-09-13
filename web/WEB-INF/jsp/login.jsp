@@ -67,16 +67,16 @@
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="usuario">Usuario </label>
-                                        <div class="col-sm-10"> <input name="usuario" type="text" > </div>
+                                        <div class="col-sm-10"> <input class="form-control" name="usuario" type="text" > </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="contrasenia">Contraseña </label>
-                                        <div class="col-sm-10"> <input name="contrasenia" type="password"> </div>
+                                        <div class="col-sm-10"> <input class="form-control" name="contrasenia" type="password"> </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button class="btn btn-default" type="submit">Guardar</button>
+                                            <button class="btn btn-success" type="submit">Guardar</button>
                                         </div>
                                     </div>
                                     <div class="form-group">

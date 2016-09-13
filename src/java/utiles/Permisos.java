@@ -60,8 +60,8 @@ public class Permisos implements Serializable{
             }
             
             perm = new Permisos(permiso);
-            
-            sql = "SELECT usuario.permiso.descripcion as permiso"//permisos adicionales
+            /* reparar
+            sql = "SELECT permiso.descripcion as permiso"//permisos adicionales
                     + "FROM usuario.permiso "
                     + "JOIN usuario.permiso_usuario "
                     + "ON permiso.id = permiso_usuario.id_permiso "
@@ -76,7 +76,7 @@ public class Permisos implements Serializable{
                 if( !permiso.contains(rs.getString( "permiso" )) )
                     permiso.add( rs.getString( "permiso" ) );
             }
-            
+            */
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
