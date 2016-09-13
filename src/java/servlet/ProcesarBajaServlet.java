@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static utiles.Session.control;
 
 /**
  *
@@ -33,22 +34,15 @@ public class ProcesarBajaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
+        if(!control(request, response)){
+            response.sendRedirect("LoginServlet");
+        } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Cliente.delete(id);
+            
             response.sendRedirect("index");
         }
 
-    }
-
-    public boolean control(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if( session == null ){
-            response.sendRedirect("LoginServlet");
-            return false;
-        }
-        return true;
     }
     
     /**

@@ -6,6 +6,7 @@
 package servlet;
 
 import utiles.Usuario;
+import utiles.Permisos;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.servlet.ServletException;
@@ -48,8 +49,10 @@ public class SessionServlet extends HttpServlet {
         
         if ( usr != null ) {
             //obtengo permisos
+            Permisos ps = Permisos.getPermisos(usr.getId());
             HttpSession session = request.getSession();
             session.setAttribute("esta_logueado", true);
+            session.setAttribute("permisos", ps);
             session.setAttribute("usuario", usr);
             response.sendRedirect("index");
         }

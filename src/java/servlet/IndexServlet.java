@@ -6,7 +6,8 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import utiles.Usuario;
+import utiles.Permisos;
 import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utiles.Consultas;
+import static utiles.Session.control;
 
 /**
  *
@@ -35,26 +37,23 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if(control(request, response)){
-            /* TODO output your page here. You may use following sample code. */
-            LinkedList clientes = Consultas.getClientes();
-            request.setAttribute("clientes", clientes);
+        //si no esta iniciada la session 
+        if(!control(request, response)){
+            response.sendRedirect("LoginServlet");//redirijo al formulario de login
+        } else {
+            HttpSession session=request.getSession();//recupero session
+            Usuario usr = (Usuario)session.getAttribute( "usuario" );//recupero usuario
+            Permisos ps = (Permisos)session.getAttribute( "permisos" );//recupero permisos
+            LinkedList clientes = Consultas.getClientes();//obtengo lista de clientes para vista
+            
+            request.setAttribute( "permisos", ps );//permisos
+            request.setAttribute( "usuario", usr );//usuario
+            request.setAttribute( "clientes", clientes );//lista de clientes
+            
             request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
         }
 
     }
-    
-    public boolean control(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if( session == null ){
-            response.sendRedirect("LoginServlet");
-            return false;
-        }
-        return true;
-    }
-    
     /**
      * Returns a short description of the servlet.
      *

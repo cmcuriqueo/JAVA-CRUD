@@ -77,6 +77,12 @@ public class Usuario implements Serializable{
     private void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return nombre; //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 
 }

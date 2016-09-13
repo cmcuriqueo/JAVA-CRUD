@@ -46,8 +46,8 @@
                             <ul class="dropdown-menu">
                               <li>
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                     <span class="glyphicon glyphicon-user"></span>
-
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <c:out value="${usuario.nombre}"/>
                                   </a>
                               </li>
                               <li class="divider"></li>
@@ -96,6 +96,26 @@
                             </c:forEach>
                         </table>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <c:if test="${not empty eliminado}"><!-- muestro errores-->
+                        <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Eliminado</strong> El cliente se ha eliminado.
+                         </div>
+                    </c:if>
+                    <c:if test="${not empty modificado}"><!-- muestro errores-->
+                        <div class="alert alert-info">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Modificado</strong> El cliente se ha modificado.
+                         </div>
+                    </c:if>
+                    <c:if test="${not empty insertado}"><!-- muestro errores-->
+                        <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Guardado</strong> El cliente se ha guardado.
+                         </div>
+                    </c:if>
                 </div>
             </div>
         </div>

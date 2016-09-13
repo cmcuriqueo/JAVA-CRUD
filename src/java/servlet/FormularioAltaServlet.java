@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javax.servlet.http.HttpSession;
+import static utiles.Session.control;
 
 /**
  *
@@ -37,7 +38,9 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
+        if(!control(request, response)){
+            response.sendRedirect("LoginServlet");
+        } else {
 
             //Lista de nacionalidades para el formulario
             LinkedList nacionalidades = Consultas.getNacionalidades();
@@ -58,7 +61,9 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
+        if(!control(request, response)){
+            response.sendRedirect("LoginServlet");
+        } else {
             HashMap<String, Object> errores = new HashMap();
 
             String nombre = request.getParameter("nombre");
@@ -110,16 +115,6 @@ public class FormularioAltaServlet extends HttpServlet {
             }
         }
 
-    }
-
-    public boolean control(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if( session == null ){
-            response.sendRedirect("LoginServlet");
-            return false;
-        }
-        return true;
     }
     
     /**

@@ -52,6 +52,9 @@
                             required: "Campo obligatorio",
                             minlength: "Longitud minima 3 carácteres",
                             maxlength: "Longitud maxima 20 carácteres"
+                        },
+                        fecha_nacimiento: {
+                            required: "Campo obligatorio"
                         }
                     }
                 });
@@ -60,11 +63,11 @@
         </script>
     </head>
     <body>
-        <form class="form-horizontal" method="POST" action="Modificacion" id="formulario_modificacion">
-            <div class="container">
-                <div class="row-flow">
+        <div class="container">
+            <div class="row-flow">
+                <form class="form-horizontal" method="POST" action="Modificacion" id="formulario_modificacion">
                     <p></p>
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="panel panel-success">
 
                             <div class="panel-body">Formulario de Modificacion</div>
@@ -74,22 +77,22 @@
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="nombre">Nombre </label>
-                                        <div class="col-sm-10"> <input name="nombre" type="text" value="<c:out value="${cliente['nombre']}"/>" > </div>
+                                        <div class="col-sm-4"> <input class="form-control" name="nombre" type="text" value="<c:out value="${cliente['nombre']}"/>" > </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="apellido">Apellido </label>
-                                        <div class="col-sm-10"> <input name="apellido" type="text" value="<c:out value="${cliente['apellido']}"/>"> </div>
+                                        <div class="col-sm-4"> <input class="form-control" name="apellido" type="text" value="<c:out value="${cliente['apellido']}"/>"> </div>
                                     </div>                            
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="fecha_nacimiento">Fecha de Nacimiento </label>
-                                        <div class="col-sm-10"><input name="fecha_nacimiento" type="date" value="<c:out value="${cliente['fecha_nacimiento']}"/>"></div>
+                                        <div class="col-sm-4"><input class="form-control" name="fecha_nacimiento" type="date" value="<c:out value="${cliente['fecha_nacimiento']}"/>"></div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="nacionalidad">Nacionalidad </label>
-                                        <div class="col-sm-10">
-                                            <select id="nacionalidad" name="nacionalidad">
+                                        <div class="col-sm-4">
+                                            <select class="form-control" name="nacionalidad">
                                                 <optgroup>
                                                     <option value="<c:out value="${cliente['id_nacionalidad']}"/>" selected><c:out value="${cliente['nacionalidad']}"/></option>
                                                 </optgroup>
@@ -105,7 +108,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="nacionalidad">Activo </label>
                                         <div class="col-sm-10">
-                                            <select id="activo" name="activo">
+                                            <select class="form-control" name="activo">
                                                 <c:choose>
                                                     <c:when test="${fila.activo eq 1}">
                                                         <option value="1" selected>Activo</option>
@@ -147,20 +150,23 @@
                                     </div>
                                     <div class="form-group">
                                         <c:if test="${not empty errores}"><!-- muestro errores-->
-                                            <p>Error al prosesar el formulario</p>
-                                            <ul>
-                                            <c:forEach var="fila" items="${errores}" >
-                                                    <li style="color: red;"><c:out value="${fila.value}"/></li>
-                                            </c:forEach>
-                                            </ul>
+                                            <div class="alert alert-success">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <strong>Error al prosesar el formulario</strong>
+                                                <ul>
+                                                    <c:forEach var="fila" items="${errores}" >
+                                                        <li><c:out value="${fila.value}"/></li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
                                         </c:if>
                                     </div>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </body>
 </html>

@@ -52,18 +52,26 @@
                             required: "Campo obligatorio",
                             minlength: "Longitud minima 3 carácteres",
                             maxlength: "Longitud maxima 20 carácteres"
+                        },
+                        fecha_nacimiento: { 
+                            required: "Campo obligatorio"
                         }
                     }
                 });
             });
         </script>
+        <style>
+            label.error{
+                color: red;
+            }
+        </style>
     </head>
     <body>
-        <form class="form-horizontal" method="POST" action="AltaFomulario" id="formulario_alta">
-            <div class="container">
-                <div class="row-flow">
+        <div class="container">
+            <div class="row-flow">
+                <form class="form-horizontal" method="POST" action="AltaFomulario" id="formulario_alta">
                     <p></p>
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="panel panel-success">
 
                             <div class="panel-body">Formulario de Alta</div>
@@ -72,23 +80,23 @@
                                 <ul class="list-group">
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="nombre">Nombre : </label>
-                                        <div class="col-sm-10"> <input name="nombre" type="text" > </div>
+                                        <label class="col-sm-2 control-label" for="nombre">Nombre </label>
+                                        <div class="col-sm-4"> <input class="form-control" name="nombre" type="text" > </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="apellido">Apellido : </label>
-                                        <div class="col-sm-10"> <input name="apellido" type="text"> </div>
+                                        <label class="col-sm-2 control-label" for="apellido">Apellido </label>
+                                        <div class="col-sm-4"> <input class="form-control" name="apellido" type="text"> </div>
                                     </div>                            
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="fecha_nacimiento">Fecha de Nacimiento : </label>
-                                        <div class="col-sm-10"><input  name="fecha_nacimiento" type="date"></div>
+                                        <label class="col-sm-2 control-label" for="fecha_nacimiento">Fecha de Nacimiento </label>
+                                        <div class="col-sm-4"><input  class="form-control" name="fecha_nacimiento" type="date"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="nacionalidad">Nacionalidad : </label>
-                                        <div class="col-sm-10">
-                                            <select id="localidad" name="nacionalidad">
+                                        <label class="col-sm-2 control-label" for="nacionalidad">Nacionalidad </label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" name="nacionalidad">
                                                 <option value="0">nacionalidad</option>
                                                 <!--<option selected></option>-->
                                                  <c:forEach var="fila" items="${nacionalidades}" >
@@ -98,7 +106,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="col-sm-offset-2 col-sm-4">
                                             <button class="btn btn-default" type="submit">Guardar</button>
 
                                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Cancelar</button>
@@ -125,20 +133,23 @@
                                     </div>
                                     <div class="form-group">
                                         <c:if test="${not empty errores}"><!-- muestro errores-->
-                                            <p>Error al prosesar el formulario</p>
-                                            <ul>
-                                                <c:forEach var="fila" items="${errores}" >
-                                                    <li style="color: red;"><c:out value="${fila.value}"/></li>
-                                                </c:forEach>
-                                            </ul>  
+                                            <div class="alert alert-success">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <strong>Error al prosesar el formulario</strong>
+                                                <ul>
+                                                    <c:forEach var="fila" items="${errores}" >
+                                                        <li><c:out value="${fila.value}"/></li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
                                         </c:if>
                                     </div>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </body>
 </html>

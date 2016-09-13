@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static utiles.Session.control;
 
 /**
  *
@@ -42,16 +43,17 @@ public class FormularioModificacionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        control(request, response);
-        
-        id_cliente = Integer.valueOf(request.getParameter("id"));
-        HashMap cliente = Cliente.getCliente(id_cliente);
-        request.setAttribute("cliente", cliente);
-        LinkedList nacionalidades = Consultas.getNacionalidades();
-        request.setAttribute("nacionalidades", nacionalidades);
-        
-        request.getRequestDispatcher("WEB-INF/jsp/modificacion_formulario.jsp").forward(request, response);
-        
+        if(!control(request, response)){
+             response.sendRedirect("LoginServlet");
+        } else {
+            id_cliente = Integer.valueOf(request.getParameter("id"));
+            HashMap cliente = Cliente.getCliente(id_cliente);
+            request.setAttribute("cliente", cliente);
+            LinkedList nacionalidades = Consultas.getNacionalidades();
+            request.setAttribute("nacionalidades", nacionalidades);
+
+            request.getRequestDispatcher("WEB-INF/jsp/modificacion_formulario.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -65,8 +67,9 @@ public class FormularioModificacionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
-
+        if(!control(request, response)){
+             response.sendRedirect("LoginServlet");
+        } else {
             HashMap<String, Object> errores = new HashMap();
 
             String nombre = request.getParameter("nombre");
@@ -120,15 +123,7 @@ public class FormularioModificacionServlet extends HttpServlet {
         }
     }
 
-    public boolean control(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if( session == null ){
-            response.sendRedirect("LoginServlet");
-            return false;
-        }
-        return true;
-    }
+
     
     /**
      * Returns a short description of the servlet.
