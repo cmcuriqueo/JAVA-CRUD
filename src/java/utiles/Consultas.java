@@ -5,6 +5,7 @@
  */
 package utiles;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,12 +27,13 @@ public class Consultas {
     
     public static LinkedList getNacionalidades(){
         Context initContext;
+        Connection conn = null;
         LinkedList <HashMap<String, Object>> resultado = new LinkedList();
         try {
             initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
-            java.sql.Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             
             String sql = "SELECT id, LOWER(descripcion) as descripcion FROM nacionalidades";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -44,18 +46,25 @@ public class Consultas {
             }
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if( conn != null && !conn.isClosed() ) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return resultado;
     }
     
     public static LinkedList getClientes(){
         Context initContext;
+        Connection conn= null;
         LinkedList <HashMap<String, Object>> resultado = new LinkedList();
         try {
             initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
-            java.sql.Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             
             String sql = "SELECT " +
                             " clientes.id as id," +
@@ -80,6 +89,12 @@ public class Consultas {
             }
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if( conn != null && !conn.isClosed() ) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return resultado;
     }

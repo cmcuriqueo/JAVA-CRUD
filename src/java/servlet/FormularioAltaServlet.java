@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javax.servlet.http.HttpSession;
+import utiles.Permisos;
 import static utiles.Session.control;
 
 /**
@@ -38,15 +39,20 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(!control(request, response)){
+        if(control(request, response)){
             response.sendRedirect("LoginServlet");
         } else {
+            HttpSession session = request.getSession();
+            Permisos permisos = (Permisos)session.getAttribute("permisos");
+            if(permisos.tienePermiso("UPDATE")){
+                //Lista de nacionalidades para el formulario
+                LinkedList nacionalidades = Consultas.getNacionalidades();
+                request.setAttribute("nacionalidades", nacionalidades);
 
-            //Lista de nacionalidades para el formulario
-            LinkedList nacionalidades = Consultas.getNacionalidades();
-            request.setAttribute("nacionalidades", nacionalidades);
-
-            request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("PermisoDenegado");
+            }
         }
     }
 
@@ -61,7 +67,7 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(!control(request, response)){
+        if(control(request, response)){
             response.sendRedirect("LoginServlet");
         } else {
             HashMap<String, Object> errores = new HashMap();
@@ -110,6 +116,9 @@ public class FormularioAltaServlet extends HttpServlet {
 
             } else {
                 //inserto y redirecciono
+                HttpSession session = request.getSession();
+                Boolean insertado = true;
+                session.setAttribute("insertado", insertado);
                 Cliente.insert(nombre, apellido, fecha_nacimiento, nacionalidad);
                 response.sendRedirect("index");
             }

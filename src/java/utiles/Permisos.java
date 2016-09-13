@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  * @author Cesar
  */
 public class Permisos implements Serializable{
-    private LinkedList permisos;
+    private LinkedList<String> permisos;
 
     public Permisos( LinkedList permisos ) {
         this.permisos = permisos;
@@ -38,15 +38,15 @@ public class Permisos implements Serializable{
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             conn = ds.getConnection();
             
-            String sql = "SELECT p.descripcion as descripcion "
-                            + "FROM usuario u "
-                                + "JOIN rol_usuario ru "
+            String sql = "SELECT usuario.p.descripcion as permiso "
+                            + "FROM usuario.usuario u "
+                                + "JOIN usuario.rol_usuario ru "
                                 + "ON u.id = ru.id_usuario "
-                                + "JOIN rol r "
+                                + "JOIN usuario.rol r "
                                 + "ON r.id = ru.id_rol "
-                                + "JOIN permiso_rol pr " 
+                                + "JOIN usuario.permiso_rol pr " 
                                 + "ON pr.id_rol = r.id "
-                                + "JOIN permiso p "
+                                + "JOIN usuario.permiso p "
                                 + "ON p.id = pr.id_permiso "
                             + "WHERE u.id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -56,10 +56,26 @@ public class Permisos implements Serializable{
             LinkedList<String> permiso = new  LinkedList<>();
             
             while ( rs.next() ) {
-                permiso.add( rs.getString( "descripcion" ) );
+                permiso.add( rs.getString( "permiso" ) );
             }
             
             perm = new Permisos(permiso);
+            
+            sql = "SELECT usuario.permiso.descripcion as permiso"//permisos adicionales
+                    + "FROM usuario.permiso "
+                    + "JOIN usuario.permiso_usuario "
+                    + "ON permiso.id = permiso_usuario.id_permiso "
+                    + "JOIN usuario.usuario "
+                    + "ON usuario.usuario.id = permiso_usuario.id_usuario "
+                    + "WHERE usuario.id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idCliente);
+            rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                if( !permiso.contains(rs.getString( "permiso" )) )
+                    permiso.add( rs.getString( "permiso" ) );
+            }
             
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,6 +91,19 @@ public class Permisos implements Serializable{
 
     public void setPermisos(LinkedList permisos) {
         this.permisos = permisos;
-    }   
+    } 
+
+    public LinkedList getPermisos() {
+        return permisos;
+    }
     
+    
+    public boolean tienePermiso(String pms){
+        for (String permiso : permisos) {
+            if (permiso.equals(pms.toUpperCase())) {
+                return true;
+            }
+        }
+        return true;       
+    }
 }

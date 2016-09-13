@@ -35,10 +35,10 @@ public class SessionServlet extends HttpServlet {
         
         //validacion
         if( usuario != null && usuario.equals("") )
-            errores.put("usuario", "Campo obligatorio");
+            errores.put("usuario", "Campo usuario obligatorio");
         
         if ( pass != null && pass.equals("") )
-            errores.put("contraseña", "Campo obligatorio");
+            errores.put("contraseña", "Campo contraseña obligatorio");
         
         if(!errores.isEmpty()){
             request.setAttribute("errores", errores);
@@ -50,6 +50,7 @@ public class SessionServlet extends HttpServlet {
         if ( usr != null ) {
             //obtengo permisos
             Permisos ps = Permisos.getPermisos(usr.getId());
+            
             HttpSession session = request.getSession();
             session.setAttribute("esta_logueado", true);
             session.setAttribute("permisos", ps);

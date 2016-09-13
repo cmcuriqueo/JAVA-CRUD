@@ -30,7 +30,7 @@ public class Usuario implements Serializable{
 
     private Usuario( Integer id, String nombre ) {
         setId(id);
-        setNombre(nombre);
+        setNombre(nombre.toLowerCase());
     }
 
     public Integer getId(){

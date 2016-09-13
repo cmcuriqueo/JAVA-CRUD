@@ -61,6 +61,11 @@
             });
 
         </script>
+        <style>
+            label.error{
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -107,10 +112,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="nacionalidad">Activo </label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-4">
                                             <select class="form-control" name="activo">
                                                 <c:choose>
-                                                    <c:when test="${fila.activo eq 1}">
+                                                    <c:when test="${fila.activo == 1}">
                                                         <option value="1" selected>Activo</option>
                                                         <option value="0" >Inactivo</option> 
                                                     </c:when>    

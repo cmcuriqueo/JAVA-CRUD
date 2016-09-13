@@ -58,7 +58,11 @@
                       </div>
                 </nav>
                 <div class="col-md-8">
-                    <h3>Clientes <a href="AltaFomulario"><small>Nuevo</small></a></h3>
+                    <h3>Clientes 
+                        <c:if test="${permisos.tienePermiso('INSERT')}">
+                            <a href="AltaFomulario"><small>Nuevo</small></a>
+                        </c:if>
+                    </h3>
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -83,14 +87,18 @@
                                            </c:otherwise>
                                     </c:choose>
                                         <td>
-                                            <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
-                                                <span class="glyphicon glyphicon-pencil"></span> Modificar
-                                            </a>
+                                            <c:if test="${permisos.tienePermiso('UPDATE')}">
+                                                <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
+                                                    <span class="glyphicon glyphicon-pencil"></span> Modificar
+                                                </a>
+                                            </c:if>
                                         </td>
                                         <td>
-                                         <a class="btn btn-danger" href="Eliminacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
-                                            <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                        </a>
+                                            <c:if test="${permisos.tienePermiso('DELETE')}">
+                                                <a class="btn btn-danger" href="Eliminacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
+                                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                                </a>
+                                            </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -98,22 +106,22 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <c:if test="${not empty eliminado}"><!-- muestro errores-->
+                    <c:if test="${not empty eliminado}">
                         <div class="alert alert-danger">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Eliminado</strong> El cliente se ha eliminado.
+                            <strong>Eliminacion:</strong> El cliente se ha eliminado.
                          </div>
                     </c:if>
-                    <c:if test="${not empty modificado}"><!-- muestro errores-->
+                    <c:if test="${not empty modificado}">
                         <div class="alert alert-info">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Modificado</strong> El cliente se ha modificado.
+                            <strong>Modificacion:</strong> El cliente se ha modificado.
                          </div>
                     </c:if>
-                    <c:if test="${not empty insertado}"><!-- muestro errores-->
+                    <c:if test="${not empty insertado}">
                         <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Guardado</strong> El cliente se ha guardado.
+                            <strong>Guardado:</strong> El cliente se ha guardado.
                          </div>
                     </c:if>
                 </div>

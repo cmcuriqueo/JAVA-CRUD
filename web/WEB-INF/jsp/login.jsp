@@ -16,6 +16,41 @@
         <script type="text/javascript" src=" <c:url value="/bower_components/jquery-validation/dist/jquery.validate.js"></c:url>"></script>
         <link rel="stylesheet" type="text/css" href=" <c:url value="/bower_components/jquery-ui/themes/base/jquery-ui.min.css"></c:url>">
         <title>Login</title>
+        <script type="text/javascript">
+            $().ready(function () {
+                $("#formulario_login").validate({
+                    rules: {
+                        usuario: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 15
+                        },
+                        contrasenia: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 15
+                        }
+                    },
+                    messages: {
+                        usuario: {
+                            required: "Campo obligatorio",
+                            minlength: "Longitud minima 3 carácteres",
+                            maxlength: "Longitud maxima 20 carácteres"
+                        },
+                        contrasenia: {
+                            required: "Campo obligatorio",
+                            minlength: "Longitud minima 3 carácteres",
+                            maxlength: "Longitud maxima 20 carácteres"
+                        }
+                    }
+                });
+            });
+        </script>
+        <style>
+            label.error{
+                color: red;
+            }
+        </style>
     </head>
     <body>
        <form class="form-horizontal" method="POST" action="Login" id="formulario_login">
