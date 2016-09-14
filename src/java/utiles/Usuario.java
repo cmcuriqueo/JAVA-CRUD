@@ -52,9 +52,16 @@ public class Usuario implements Serializable{
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             conn = ds.getConnection();
+            StringBuilder query = new StringBuilder();
             
-            String sql = "SELECT usuario.id, usuario.nombre FROM usuario.usuario WHERE usuario.nombre LIKE ? AND usuario.contrasenia = SHA1( ? ) AND usuario.estado = 1";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            query.append( "SELECT usuario.id, usuario.nombre " );
+            query.append( "FROM usuario.usuario " );
+            query.append( "WHERE" );
+            query.append( "     true ");
+            query.append( "     AND usuario.nombre LIKE ? " );
+            query.append( "     AND usuario.contrasenia = SHA1( ? ) " );
+            query.append( "     AND usuario.estado = 1" );
+            PreparedStatement pstmt = conn.prepareStatement( query.toString() );
             pstmt.setString(1, user);
             pstmt.setString(2, password);
         

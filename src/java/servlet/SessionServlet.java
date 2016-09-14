@@ -56,6 +56,10 @@ public class SessionServlet extends HttpServlet {
             session.setAttribute("permisos", ps);
             session.setAttribute("usuario", usr);
             response.sendRedirect("index");
+        } else {
+            errores.put("error", "La combinacion de usuario y contraseña no es correcta");
+            request.setAttribute("errores", errores);
+            request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
         }
         
 

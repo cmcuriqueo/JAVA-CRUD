@@ -35,8 +35,13 @@ public class Cliente {
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
 
             conn = ds.getConnection();
-            String sql = "INSERT INTO clientes (nombre, apellido, fecha_nacimiento, nacionalidad_id, activo) VALUES ( ?, ?, ? , ? , 1 )";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            
+            StringBuilder query = new StringBuilder();
+            query.append( "INSERT INTO clientes " );
+            query.append( "     (nombre, apellido, fecha_nacimiento, nacionalidad_id, activo) ");
+            query.append( "VALUES ( ?, ?, ? , ? , 1 )" );
+            
+            PreparedStatement pstmt = conn.prepareStatement( query.toString());
             pstmt.setString(1, nombre);
             pstmt.setString(2, apellido);
             pstmt.setDate(3,  fecha_nacimiento);
@@ -66,15 +71,17 @@ public class Cliente {
             
             conn = ds.getConnection();
             
-     
-            String sql = "UPDATE clientes "
-                    + "SET apellido = UPPER( ? ), "
-                    + "nombre = UPPER( ?), "
-                    + "fecha_nacimiento = ?, "
-                    + "activo = ?, "
-                    + "nacionalidad_id = ? "
-                    + "WHERE clientes.id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            StringBuilder query = new StringBuilder();
+            query.append( "UPDATE clientes " );
+            query.append( "SET apellido = UPPER( ? ), " );
+            query.append( "     nombre = UPPER( ?), " );
+            query.append( "     fecha_nacimiento = ?, " );
+            query.append( "     activo = ?, " );
+            query.append( "     nacionalidad_id = ? " );
+            query.append( "WHERE " );
+            query.append( "     true" );
+            query.append( "     AND clientes.id = ?" );
+            PreparedStatement pstmt = conn.prepareStatement( query.toString() );
             pstmt.setString(2, nombre);
             pstmt.setString(1, apellido);
             pstmt.setDate(3, fecha_nacimiento);
@@ -105,10 +112,12 @@ public class Cliente {
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             conn = ds.getConnection();
             
-            String sql =    "DELETE FROM " +
-                                "clientes " +
-                            "WHERE id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            StringBuilder query = new StringBuilder();
+            query.append( "DELETE FROM " );
+            query.append( "clientes " );
+            query.append( "WHERE id = ?" );
+            
+            PreparedStatement pstmt = conn.prepareStatement( query.toString() );
             pstmt.setInt(1, id);
 
             pstmt.execute();

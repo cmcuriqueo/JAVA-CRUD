@@ -34,10 +34,16 @@ public class Consultas {
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             conn = ds.getConnection();
+
             
-            String sql = "SELECT id, LOWER(descripcion) as descripcion FROM nacionalidades";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            StringBuilder query = new StringBuilder();
+            
+            query.append( "SELECT id, LOWER(descripcion) as descripcion ");
+            query.append( "FROM nacionalidades");
+            
+            PreparedStatement pstmt = conn.prepareStatement( query.toString() );
             ResultSet rs = pstmt.executeQuery();
+            
             while (rs.next()) {
                 HashMap row = new HashMap();
                 row.put( "id", rs.getInt("id") );
@@ -66,18 +72,20 @@ public class Consultas {
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             conn = ds.getConnection();
             
-            String sql = "SELECT " +
-                            " clientes.id as id," +
-                            " LOWER( apellido ) as apellido, " +
-                            " LOWER( nombre ) as nombre, " +
-                            " TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) as edad," +
-                            " activo," +
-                            " LOWER(nacionalidades.descripcion) as nacionalidad" +
-                        " FROM clientes " +
-                            " join nacionalidades " +
-                            " on clientes.nacionalidad_id = nacionalidades.id";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            StringBuilder query = new StringBuilder();
+            query.append( "SELECT clientes.id as id,");
+            query.append( " LOWER( apellido ) as apellido, ");
+            query.append( " LOWER( nombre ) as nombre, " );
+            query.append( " TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) as edad," );
+            query.append( " activo," );
+            query.append( " LOWER(nacionalidades.descripcion) as nacionalidad" );
+            query.append( " FROM clientes " );
+            query.append( " join nacionalidades " );
+            query.append( " on clientes.nacionalidad_id = nacionalidades.id");
+            
+            PreparedStatement pstmt = conn.prepareStatement( query.toString() );
             ResultSet rs = pstmt.executeQuery();
+            
             while (rs.next()) {
                 HashMap row = new HashMap();
                 row.put( "id", rs.getInt("id") );

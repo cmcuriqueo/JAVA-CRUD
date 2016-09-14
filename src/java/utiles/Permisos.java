@@ -38,18 +38,19 @@ public class Permisos implements Serializable{
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             conn = ds.getConnection();
             
-            String sql = "SELECT usuario.p.descripcion as permiso "
-                            + "FROM usuario.usuario u "
-                                + "JOIN usuario.rol_usuario ru "
-                                + "ON u.id = ru.id_usuario "
-                                + "JOIN usuario.rol r "
-                                + "ON r.id = ru.id_rol "
-                                + "JOIN usuario.permiso_rol pr " 
-                                + "ON pr.id_rol = r.id "
-                                + "JOIN usuario.permiso p "
-                                + "ON p.id = pr.id_permiso "
-                            + "WHERE u.id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            StringBuilder query = new StringBuilder();
+            query.append( "SELECT usuario.p.descripcion as permiso " );
+            query.append( "FROM usuario.usuario u " );
+            query.append( "JOIN usuario.rol_usuario ru " );
+            query.append(  "ON u.id = ru.id_usuario " );
+            query.append( "JOIN usuario.rol r " );
+            query.append( "ON r.id = ru.id_rol " );
+            query.append( "JOIN usuario.permiso_rol pr "); 
+            query.append( "ON pr.id_rol = r.id ");
+            query.append( "JOIN usuario.permiso p " );
+            query.append( "ON p.id = pr.id_permiso " );
+            query.append( "WHERE u.id = ?" );
+            PreparedStatement pstmt = conn.prepareStatement( query.toString() );
             pstmt.setInt(1, idCliente);
         
             ResultSet rs = pstmt.executeQuery();
@@ -59,21 +60,27 @@ public class Permisos implements Serializable{
                 permiso.add( rs.getString( "permiso" ) );
             }
             
-            perm = new Permisos(permiso);
-            /* reparar
-            sql = "SELECT permiso.descripcion as permiso"//permisos adicionales
-                    + "FROM usuario.permiso "
-                    + "JOIN usuario.permiso_usuario "
-                    + "ON permiso.id = permiso_usuario.id_permiso "
-                    + "JOIN usuario.usuario "
-                    + "ON usuario.usuario.id = permiso_usuario.id_usuario "
-                    + "WHERE usuario.id = ?";
-            pstmt = conn.prepareStatement(sql);
+            perm = new Permisos( permiso );
+            /*
+            query.setLength( 0 );
+            
+            query.append( "SELECT p.descripcion as permiso" );//permisos adicionales
+            query.append( "FROM usuario.permiso p " );
+            query.append( "JOIN usuario.permiso_usuario pu" );
+            query.append( "ON p.id = pu.id_permiso " );
+            query.append( "JOIN usuario.usuario u" );
+            query.append( "ON u.id = pu.id_usuario " );
+            query.append( "WHERE " );
+            query.append( "true " );
+            query.append( "AND u.id = ?" );
+            
+            
+            pstmt = conn.prepareStatement( query.toString() );
             pstmt.setInt(1, idCliente);
             rs = pstmt.executeQuery();
             
             while ( rs.next() ) {
-                if( !permiso.contains(rs.getString( "permiso" )) )
+                if( !permiso.contains( rs.getString( "permiso" ) ) )
                     permiso.add( rs.getString( "permiso" ) );
             }
             */

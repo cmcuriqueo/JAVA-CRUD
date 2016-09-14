@@ -1,25 +1,10 @@
-<%-- 
-    Document   : alta_fomulario
-    Created on : 07-sep-2016, 3:08:38
-    Author     : Cesar
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src=" <c:url value="/bower_components/jquery/dist/jquery.min.js"></c:url>"></script>
-        <script type="text/javascript" src=" <c:url value="/bower_components/bootstrap/dist/js/bootstrap.js"></c:url>"></script>
-        <link rel="stylesheet" type="text/css" href=" <c:url value="/bower_components/bootstrap/dist/css/bootstrap.css"></c:url>">
-        <script type="text/javascript" src=" <c:url value="/bower_components/jquery-ui/jquery-ui.js"></c:url>"></script>
-        <script type="text/javascript" src=" <c:url value="/bower_components/jquery-validation/dist/jquery.validate.js"></c:url>"></script>
-        <link rel="stylesheet" type="text/css" href=" <c:url value="/bower_components/jquery-ui/themes/base/jquery-ui.min.css"></c:url>">
+<jsp:include page="header.jsp" />
         <title>Formulario Modificacion</title>
         <script type="text/javascript">
             $().ready(function () {
                 jQuery.validator.addMethod('selectcheck', function (value) {
-                    return (value != '0');
+                    return value != '0';
                 }, "Campo obligatorio");
 
                 $("#formulario_modificacion").validate({
@@ -45,13 +30,13 @@
                     messages: {
                         nombre: {
                             required: "Campo obligatorio",
-                            minlength: "Longitud minima 3 carÃ¡cteres",
-                            maxlength: "Longitud maxima 20 carÃ¡cteres"
+                            minlength: "Longitud minima 3 carácteres",
+                            maxlength: "Longitud maxima 20 carácteres"
                         },
                         apellido: {
                             required: "Campo obligatorio",
-                            minlength: "Longitud minima 3 carÃ¡cteres",
-                            maxlength: "Longitud maxima 20 carÃ¡cteres"
+                            minlength: "Longitud minima 3 carácteres",
+                            maxlength: "Longitud maxima 20 carácteres"
                         },
                         fecha_nacimiento: {
                             required: "Campo obligatorio"
@@ -61,11 +46,6 @@
             });
 
         </script>
-        <style>
-            label.error{
-                color: red;
-            }
-        </style>
     </head>
     <body>
         <div class="container">
@@ -142,7 +122,7 @@
                                                      <h4 class="modal-title" id="myModalLabel">Cancelar creacion de cliente</h4>
                                                    </div>
                                                    <div class="modal-body">
-                                                       Se perderan todos los datos completados<br/>Â¿Esta seguro de continuar?
+                                                       Se perderan todos los datos completados<br/>¿Esta seguro de continuar?
                                                    </div>
                                                    <div class="modal-footer">
                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
