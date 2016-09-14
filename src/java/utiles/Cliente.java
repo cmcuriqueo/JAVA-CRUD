@@ -26,7 +26,7 @@ import javax.sql.DataSource;
  */
 public class Cliente {
  
-    
+    //inserta un cliente en la base de datos
     public static boolean insert(String nombre, String apellido, Date fecha_nacimiento, int nacionalidad ) {
         Connection conn = null;
         try {
@@ -37,6 +37,8 @@ public class Cliente {
             conn = ds.getConnection();
             
             StringBuilder query = new StringBuilder();
+            
+            
             query.append( "INSERT INTO clientes " );
             query.append( "     (nombre, apellido, fecha_nacimiento, nacionalidad_id, activo) ");
             query.append( "VALUES ( ?, ?, ? , ? , 1 )" );
@@ -62,6 +64,7 @@ public class Cliente {
         return true;
     }
 
+    //actualiza un cliente de la base de datos
     public static boolean update(int id_cliente, String nombre, String apellido, Date fecha_nacimiento, int nacionalidad, int activo ) {
         Connection conn = null;
         try {
@@ -104,6 +107,7 @@ public class Cliente {
         return true;
     }
     
+    //elimina un cliente de la base de datos
     public static boolean delete(int id) {
         Connection conn = null;
         try {
@@ -137,6 +141,7 @@ public class Cliente {
         return true;
     }    
     
+    //obtiene la informacion de un cliente de la base de datos
     public static HashMap getCliente(int id) {
         HashMap<String, Object> cliente = new HashMap();
         Connection conn = null;

@@ -6,6 +6,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author universidad
  */
-@WebServlet(name = "PermisoDenegadoServlet", urlPatterns = {"/PermisoDenegado"})
-public class PermisoDenegadoServlet extends HttpServlet {
+@WebServlet(name = "SinPermisoServlet", urlPatterns = {"/SinPermiso"})
+public class SinPermisoServlet extends HttpServlet {
 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,9 +33,8 @@ public class PermisoDenegadoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("WEB-INF/jsp/denegado.jsp");
+        response.sendRedirect("WEB-INF/jsp/sin_permisos.jsp");
     }
-
 
     /**
      * Returns a short description of the servlet.

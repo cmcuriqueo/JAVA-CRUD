@@ -39,6 +39,8 @@ public class Permisos implements Serializable{
             conn = ds.getConnection();
             
             StringBuilder query = new StringBuilder();
+            
+            //permisos de roles
             query.append( "SELECT usuario.p.descripcion as permiso " );
             query.append( "FROM usuario.usuario u " );
             query.append( "JOIN usuario.rol_usuario ru " );
@@ -61,18 +63,19 @@ public class Permisos implements Serializable{
             }
             
             perm = new Permisos( permiso );
-            /*
+            
             query.setLength( 0 );
             
-            query.append( "SELECT p.descripcion as permiso" );//permisos adicionales
+            //permisos de usuarios
+            query.append( "SELECT p.descripcion as permiso " );//permisos adicionales
             query.append( "FROM usuario.permiso p " );
-            query.append( "JOIN usuario.permiso_usuario pu" );
-            query.append( "ON p.id = pu.id_permiso " );
-            query.append( "JOIN usuario.usuario u" );
-            query.append( "ON u.id = pu.id_usuario " );
+            query.append( "     JOIN usuario.permiso_usuario pu " );
+            query.append( "     ON p.id = pu.id_permiso " );
+            query.append( "     JOIN usuario.usuario u " );
+            query.append( "     ON u.id = pu.id_usuario " );
             query.append( "WHERE " );
-            query.append( "true " );
-            query.append( "AND u.id = ?" );
+            query.append( "     true " );
+            query.append( "     AND u.id = ?" );
             
             
             pstmt = conn.prepareStatement( query.toString() );
@@ -83,7 +86,7 @@ public class Permisos implements Serializable{
                 if( !permiso.contains( rs.getString( "permiso" ) ) )
                     permiso.add( rs.getString( "permiso" ) );
             }
-            */
+            
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

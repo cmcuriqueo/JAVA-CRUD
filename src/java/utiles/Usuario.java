@@ -54,6 +54,7 @@ public class Usuario implements Serializable{
             conn = ds.getConnection();
             StringBuilder query = new StringBuilder();
             
+            //busca el usuario con su respectiva contraseña en la base de datos 
             query.append( "SELECT usuario.id, usuario.nombre " );
             query.append( "FROM usuario.usuario " );
             query.append( "WHERE" );

@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -38,6 +37,7 @@ public class Consultas {
             
             StringBuilder query = new StringBuilder();
             
+            //Lista de nacionalidades
             query.append( "SELECT id, LOWER(descripcion) as descripcion ");
             query.append( "FROM nacionalidades");
             
@@ -73,6 +73,8 @@ public class Consultas {
             conn = ds.getConnection();
             
             StringBuilder query = new StringBuilder();
+            
+            //lista de clientes
             query.append( "SELECT clientes.id as id,");
             query.append( " LOWER( apellido ) as apellido, ");
             query.append( " LOWER( nombre ) as nombre, " );
