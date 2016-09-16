@@ -16,11 +16,11 @@ import javax.servlet.http.HttpSession;
  * @author Cesar
  */
 public class Session {
-    
+
     public static boolean control(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        
+
         return session == null;//retorna true si la session no esta iniciada
     }
 }

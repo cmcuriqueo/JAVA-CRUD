@@ -24,33 +24,35 @@ import javax.servlet.http.HttpSession;
 public class SessionServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-        
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario  = request.getParameter( "usuario" );
-        String pass      = request.getParameter( "contrasenia" );
-        
+        String usuario = request.getParameter("usuario");
+        String pass = request.getParameter("contrasenia");
+
         HashMap<String, Object> errores = new HashMap();
-        
+
         //validacion
-        if( usuario != null && usuario.equals("") )
+        if (usuario != null && usuario.equals("")) {
             errores.put("usuario", "Campo usuario obligatorio");
-        
-        if ( pass != null && pass.equals("") )
+        }
+
+        if (pass != null && pass.equals("")) {
             errores.put("contraseña", "Campo contraseña obligatorio");
-        
-        if(!errores.isEmpty()){
+        }
+
+        if (!errores.isEmpty()) {
             request.setAttribute("errores", errores);
             request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
         }
 
-        Usuario usr = Usuario.getUsuario( usuario, pass );
-        
-        if ( usr != null ) {
+        Usuario usr = Usuario.getUsuario(usuario, pass);
+
+        if (usr != null) {
             //obtengo permisos
             Permisos ps = Permisos.getPermisos(usr.getId());
-            
+
             HttpSession session = request.getSession();
             session.setAttribute("esta_logueado", true);
             session.setAttribute("permisos", ps);
@@ -61,10 +63,7 @@ public class SessionServlet extends HttpServlet {
             request.setAttribute("errores", errores);
             request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
         }
-        
 
-        
-        
     }
 
     /**

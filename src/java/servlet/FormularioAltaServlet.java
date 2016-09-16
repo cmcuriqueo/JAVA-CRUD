@@ -39,12 +39,12 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
+        if (control(request, response)) {
             response.sendRedirect("LoginServlet");
         } else {
             HttpSession session = request.getSession();
-            Permisos permisos = (Permisos)session.getAttribute("permisos");
-            if(permisos.tienePermiso("UPDATE")){
+            Permisos permisos = (Permisos) session.getAttribute("permisos");
+            if (permisos.tienePermiso("UPDATE")) {
                 //Lista de nacionalidades para el formulario
                 LinkedList nacionalidades = Consultas.getNacionalidades();
                 request.setAttribute("nacionalidades", nacionalidades);
@@ -67,7 +67,7 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
+        if (control(request, response)) {
             response.sendRedirect("LoginServlet");
         } else {
             HashMap<String, Object> errores = new HashMap();
@@ -78,7 +78,7 @@ public class FormularioAltaServlet extends HttpServlet {
 
             String fecha = request.getParameter("fecha_nacimiento");
 
-            Date fecha_nacimiento= null;
+            Date fecha_nacimiento = null;
 
             //valido nombre
             if (nombre == null || nombre.equals("")) {
@@ -96,12 +96,12 @@ public class FormularioAltaServlet extends HttpServlet {
             }
 
             //valido fecha
-            if (fecha == null || fecha.equals("")){
+            if (fecha == null || fecha.equals("")) {
                 errores.put("fecha_nacimiento", "La fecha de nacimiento es requerido");
             } else {
                 try {
                     fecha_nacimiento = Date.valueOf(fecha);
-                } catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     errores.put("fecha_nacimiento", "Ingrese una fecha de nacimiento valida");
                 }
             }
@@ -125,7 +125,7 @@ public class FormularioAltaServlet extends HttpServlet {
         }
 
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

@@ -34,7 +34,6 @@ public class PermisoDenegadoServlet extends HttpServlet {
         response.sendRedirect("WEB-INF/jsp/denegado.jsp");
     }
 
-
     /**
      * Returns a short description of the servlet.
      *

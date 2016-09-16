@@ -35,13 +35,13 @@ public class ProcesarBajaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
+        if (control(request, response)) {
             response.sendRedirect("LoginServlet");
         } else {
             HttpSession session = request.getSession();
-            Permisos permisos = (Permisos)session.getAttribute("permisos");
-            
-            if(permisos.tienePermiso("DELETE")){
+            Permisos permisos = (Permisos) session.getAttribute("permisos");
+
+            if (permisos.tienePermiso("DELETE")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Cliente.delete(id);
                 Boolean eliminado = true;
@@ -53,7 +53,7 @@ public class ProcesarBajaServlet extends HttpServlet {
         }
 
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

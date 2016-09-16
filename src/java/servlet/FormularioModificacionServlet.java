@@ -27,9 +27,8 @@ import static utiles.Session.control;
  */
 @WebServlet(name = "FormularioModificacionServlet", urlPatterns = {"/Modificacion"})
 public class FormularioModificacionServlet extends HttpServlet {
+
     private int id_cliente;
-
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -43,13 +42,13 @@ public class FormularioModificacionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if(control(request, response)){
-             response.sendRedirect("LoginServlet");
+
+        if (control(request, response)) {
+            response.sendRedirect("LoginServlet");
         } else {
             HttpSession session = request.getSession();
-            Permisos permisos = (Permisos)session.getAttribute("permisos");
-            if(permisos.tienePermiso("UPDATE")){
+            Permisos permisos = (Permisos) session.getAttribute("permisos");
+            if (permisos.tienePermiso("UPDATE")) {
                 id_cliente = Integer.valueOf(request.getParameter("id"));
                 HashMap cliente = Cliente.getCliente(id_cliente);
                 request.setAttribute("cliente", cliente);
@@ -74,8 +73,8 @@ public class FormularioModificacionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(control(request, response)){
-             response.sendRedirect("LoginServlet");
+        if (control(request, response)) {
+            response.sendRedirect("LoginServlet");
         } else {
             HashMap<String, Object> errores = new HashMap();
 
@@ -84,7 +83,7 @@ public class FormularioModificacionServlet extends HttpServlet {
             int nacionalidad = Integer.valueOf(request.getParameter("nacionalidad"));
             int activo = Integer.valueOf(request.getParameter("activo"));
             String fecha = request.getParameter("fecha_nacimiento");
-            Date fecha_nacimiento= null;
+            Date fecha_nacimiento = null;
 
             //valido nombre
             if (nombre == null || nombre.equals("")) {
@@ -102,12 +101,12 @@ public class FormularioModificacionServlet extends HttpServlet {
             }
 
             //valido fecha
-            if (fecha == null || fecha.equals("")){
+            if (fecha == null || fecha.equals("")) {
                 errores.put("fecha_nacimiento", "La fecha de nacimiento es requerido");
             } else {
                 try {
                     fecha_nacimiento = Date.valueOf(fecha);
-                } catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     errores.put("fecha_nacimiento", "Ingrese una fecha de nacimiento valida");
                 }
             }
@@ -133,8 +132,6 @@ public class FormularioModificacionServlet extends HttpServlet {
         }
     }
 
-
-    
     /**
      * Returns a short description of the servlet.
      *

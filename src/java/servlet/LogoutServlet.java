@@ -21,7 +21,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/Logout"})
 public class LogoutServlet extends HttpServlet {
 
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -36,16 +35,15 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         logout(request, response);
     }
-    
+
     protected void logout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session=request.getSession();
+
+        HttpSession session = request.getSession();
         session.invalidate();
         response.sendRedirect("LoginServlet");
-        
+
     }
- 
 
     /**
      * Returns a short description of the servlet.

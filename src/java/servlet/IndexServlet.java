@@ -38,16 +38,15 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //si no esta iniciada la session 
-        if(control(request, response)){
+        if (control(request, response)) {
             response.sendRedirect("LoginServlet");//redirijo al formulario de login
         } else {
-        
-            
-            HttpSession session=request.getSession();//recupero session
-            Usuario usr = (Usuario)session.getAttribute( "usuario" );//recupero usuario
-            
-            Permisos ps = (Permisos)session.getAttribute( "permisos" );//recupero permisos
-            if(!ps.tienePermiso("SELECT")) {
+
+            HttpSession session = request.getSession();//recupero session
+            Usuario usr = (Usuario) session.getAttribute("usuario");//recupero usuario
+
+            Permisos ps = (Permisos) session.getAttribute("permisos");//recupero permisos
+            if (!ps.tienePermiso("SELECT")) {
                 response.sendRedirect("PermisoDenegado");
             } else {
                 Boolean modificado;
@@ -56,35 +55,41 @@ public class IndexServlet extends HttpServlet {
 
                 LinkedList clientes = Consultas.getClientes();//obtengo lista de clientes para vista
 
-                request.setAttribute( "permisos", ps );//permisos
-                request.setAttribute( "usuario", usr );//usuario
-                request.setAttribute( "clientes", clientes );//lista de clientes
-            
-                modificado = (Boolean)session.getAttribute( "modificado" );
-                if (modificado != null){
+                request.setAttribute("permisos", ps);//permisos
+                request.setAttribute("usuario", usr);//usuario
+                request.setAttribute("clientes", clientes);//lista de clientes
+
+                modificado = (Boolean) session.getAttribute("modificado");
+                if (modificado != null) {
                     modificado = true;
-                    request.setAttribute( "modificado", modificado );//permisos
+                    request.setAttribute("modificado", modificado);//permisos
                 }
-                insertado = (Boolean)session.getAttribute( "insertado" );
-                if (insertado != null){
+                insertado = (Boolean) session.getAttribute("insertado");
+                if (insertado != null) {
                     insertado = true;
-                    request.setAttribute( "insertado", insertado );//permisos
+                    request.setAttribute("insertado", insertado);//permisos
                 }
-                eliminado = (Boolean)session.getAttribute( "eliminado" );
-                if (eliminado != null){
+                eliminado = (Boolean) session.getAttribute("eliminado");
+                if (eliminado != null) {
                     eliminado = true;
-                    request.setAttribute( "eliminado", eliminado );//permisos
+                    request.setAttribute("eliminado", eliminado);//permisos
                 }
                 request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
 
-
-                if( insertado != null && insertado ) session.removeAttribute("insertado");
-                if( modificado != null && modificado ) session.removeAttribute("modificado");
-                if( eliminado != null && eliminado ) session.removeAttribute("eliminado");
+                if (insertado != null && insertado) {
+                    session.removeAttribute("insertado");
+                }
+                if (modificado != null && modificado) {
+                    session.removeAttribute("modificado");
+                }
+                if (eliminado != null && eliminado) {
+                    session.removeAttribute("eliminado");
+                }
             }
         }
 
     }
+
     /**
      * Returns a short description of the servlet.
      *
