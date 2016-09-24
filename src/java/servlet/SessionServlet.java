@@ -5,8 +5,8 @@
  */
 package servlet;
 
-import utiles.Usuario;
-import utiles.Permisos;
+import util.Usuario;
+import util.Permisos;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.servlet.ServletException;

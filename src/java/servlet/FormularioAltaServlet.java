@@ -5,20 +5,20 @@
  */
 package servlet;
 
-import utiles.Cliente;
+import util.Cliente;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utiles.Consultas;
+import util.Consultas;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javax.servlet.http.HttpSession;
-import utiles.Permisos;
-import static utiles.Session.control;
+import util.Permisos;
+import static util.Session.control;
 
 /**
  *
