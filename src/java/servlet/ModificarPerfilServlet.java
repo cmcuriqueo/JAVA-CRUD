@@ -73,25 +73,12 @@ public class ModificarPerfilServlet extends HttpServlet {
             String fecha = request.getParameter("fecha_nacimiento");
             Date fecha_nacimiento = null;
             
-            //valido nombre
-            if (nombre == null || nombre.equals("")) {
-                errores.put("nombre", "El nombre es requerido");
-            }
-
-            //valido apellido
-            if (apellido == null || apellido.equals("")) {
-                errores.put("apellido", "El apellido es requerido");
-            }
-
             //valido nacionalidad
-            if (dni == null || dni.equals("")) {
+            if (dni != null && !dni.equals("") && !dni.matches("^[0-9]{7,8}$")) {
                 errores.put("dni", "El dni es requerido");
             }
-
-            //valido fecha
-            if (fecha == null || fecha.equals("")) {
-                errores.put("fecha_nacimiento", "La fecha de nacimiento es requerido");
-            } else {
+            if (fecha != null && !fecha.equals(""))
+            {
                 try {
                     fecha_nacimiento = Date.valueOf(fecha);
                 } catch (IllegalArgumentException e) {
