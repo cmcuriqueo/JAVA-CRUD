@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp" />
+    <jsp:include page="header.jsp" />
         <title>Permiso Denegado</title>
     </head>
     <body>

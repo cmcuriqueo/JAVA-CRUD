@@ -36,15 +36,12 @@
        <form class="form-horizontal" method="POST" action="Login" id="formulario_login">
             <div class="container">
                 <div class="row-flow">
-                    <p></p>
+                    <p></p><p></p>
                     <div class="col-md-10">
                         <div class="panel panel-success">
-
                             <div class="panel-body">Inico de Session</div>
-
                             <div class="panel-footer">
                                 <ul class="list-group">
-
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="usuario">Usuario </label>
                                         <div class="col-sm-10"> <input class="form-control" name="usuario" type="text" > </div>
