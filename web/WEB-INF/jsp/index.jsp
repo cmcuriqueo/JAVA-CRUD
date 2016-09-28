@@ -18,19 +18,21 @@
                         </button>
                         <a class="navbar-brand" href="#">Logotipo</a>
                     </div>
-                      <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+                      <!-- Agrupar los enlaces de navegacion, los formularios y cualquier
                            otro elemento que se pueda ocultar al minimizar la barra -->
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <ul class="nav navbar-nav navbar-right">
                           <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                              Menú<b class="caret"></b>
+                              Men&uacute;<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                               <li>
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                        <c:out value="${usuario.nombre}"/>
+                                        <a href="Perfil">
+						<span class="glyphicon glyphicon-user"></span>
+                                        	<c:out value="${usuario.nombre}"/>
+					</a>
                                   </a>
                               </li>
                               <li class="divider"></li>

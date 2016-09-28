@@ -5,8 +5,8 @@
  */
 package servlet;
 
-import utiles.Cliente;
-import utiles.Consultas;
+import util.Cliente;
+import util.Consultas;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import utiles.Permisos;
-import static utiles.Session.control;
+import util.Permisos;
+import static util.Session.control;
 
 /**
  *
